@@ -1,5 +1,5 @@
 const path = require('path');
-const { Sequelize, Model } = require('sequelize');
+const Sequelize = require('sequelize');
 
 // TODO - create the new sequelize connection
 const sequelize = new Sequelize({

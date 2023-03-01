@@ -58,5 +58,20 @@ describe('Band and Musician Models', () => {
 
         expect(foundMusician.instrument).toBe("Hurdy-gurdy");
     })
+
+    test('can add Musicians to band', async () => {
+        const newMusician = await Musician.create({
+            name: "Timmy Coolguy",
+            instrument: "Banjo"
+        });
+
+        const currBand = await Band.findByPk(1);
+
+        await currBand.addMusician(1);
+        await currBand.addMusician(2);
+        musicians = await currBand.getMusicians();
+
+        expect(musicians.length).toBe(2);
+    })
     
 })
