@@ -105,5 +105,19 @@ describe('Band and Musician Models', () => {
         expect(firstBandSongs.length).toEqual(secondBandSongs.length);
 
     })
+
+    test("Eager loading", async () => {
+        bandsList = await Band.findAll({
+            include: [
+                {model: Musician, as: "musicians"}
+            ]
+        })
+
+        bandsSongList = await Band.findAll({
+            include: [
+                {model: Song, as: "songs"}
+            ]
+        })
+    })
     
 })
