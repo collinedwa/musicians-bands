@@ -1,5 +1,5 @@
 const {sequelize} = require('./db');
-const {Band, Musician} = require('./index')
+const {Band, Musician, Song} = require('./index')
 
 describe('Band and Musician Models', () => {
     /**
@@ -72,6 +72,38 @@ describe('Band and Musician Models', () => {
         musicians = await currBand.getMusicians();
 
         expect(musicians.length).toBe(2);
+    })
+
+    test('can add Songs to multiple bands', async () => {
+        const newSong = await Song.create({
+            title: "Funky Business",
+            year: 1976
+        });
+
+        const secondSong = await Song.create({
+            title: "Sad Times for Pinky Patterson",
+            year: 2001
+        })
+
+        const firstBand = await Band.findByPk(1);
+
+        firstBand.addSong(1);
+        firstBand.addSong(2);
+
+        const secondBand = await Band.create({
+            name: "The Unfriendly Folks",
+            genre: "Angry Jazz",
+            showCount: 5
+        })
+
+        secondBand.addSong(1);
+        secondBand.addSong(2);
+
+        firstBandSongs = await firstBand.getSongs();
+        secondBandSongs = await secondBand.getSongs();
+
+        expect(firstBandSongs.length).toEqual(secondBandSongs.length);
+
     })
     
 })
